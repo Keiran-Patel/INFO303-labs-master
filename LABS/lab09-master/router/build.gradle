@@ -1,0 +1,39 @@
+plugins {
+	id 'java'
+}
+
+configurations {
+	// using slf4j to unify the logging, so prevent clogging from being used
+	all*.exclude module:'commons-logging'
+
+	// exclude unneeded CXF transitive dependencies
+	all*.exclude group: 'xml-resolver', module: 'xml-resolver'
+	all*.exclude group: 'org.apache.cxf', module:'cxf-rt-rs-security-oauth'
+	all*.exclude group: 'org.apache.cxf', module: 'cxf-rt-features-clustering'
+	all*.exclude group: 'org.apache.cxf', module: 'cxf-rt-ws-addr'
+}
+
+dependencies {
+	implementation project (':common')
+
+	def camelVer = '3.16.0'
+	def activeMqVer = '5.17.1'
+
+	// Camel meta-package that includes most of the useful stuff
+	implementation group: 'org.apache.camel', name: 'camel-core', version: camelVer
+
+	// Camel JMS support
+	implementation group: 'org.apache.camel', name: 'camel-jms', version: camelVer
+	implementation group: 'org.apache.camel', name: 'camel-activemq', version: camelVer
+	implementation group: 'org.apache.activemq', name: 'activemq-client', version: activeMqVer
+
+	// Camel JSON support
+	implementation group: 'org.apache.camel', name: 'camel-gson', version: camelVer
+	implementation group: 'org.apache.camel', name: 'camel-jsonpath', version: camelVer
+
+	// Camel HTTP client support (for REST services)
+	implementation group: 'org.apache.camel', name: 'camel-http', version: camelVer
+
+	// Camel GraphQL support
+	implementation group: 'org.apache.camel', name: 'camel-graphql', version: camelVer
+}

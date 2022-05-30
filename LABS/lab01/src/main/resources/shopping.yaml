@@ -1,0 +1,88 @@
+openapi: 3.0.1
+info:
+  title: Shopping List API
+  description: A service API for managing a shopping list.
+  version: 1.0.0
+servers:
+- url: /api
+tags:
+- name: Shopping List
+- name: Shopping Item
+paths:
+  /items:
+    get:
+      tags:
+      - Shopping List
+      summary: Lists the items in the shopping list.
+      responses:
+        200:
+          description: Reponse contains the entire shopping list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingItem'
+    post:
+      tags:
+      - Shopping List
+      summary: Add an item to the shopping list.
+      requestBody:
+        description: The item to add to the list.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingItem'
+        required: true
+      responses:
+        201:
+          description: New item successfully added to the list.
+          content: {}
+  /items/item/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        description: The item's name.      
+    get:
+      tags:
+      - Shopping Item
+      summary: Get a specific item's details.
+      responses:
+        200:
+          description: Response contains the details of the item matching the provided
+            name.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShoppingItem'
+    put:
+      tags:
+      - Shopping Item
+      summary: Replace an existing item.
+      requestBody:
+        description: The replacement details for the item.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingItem'
+        required: true
+      responses:
+        204:
+          description: Item successfully replaced
+    delete:
+      tags:
+      - Shopping Item
+      summary: Delete an item from the list.
+      responses:
+        204:
+          description: Item successfully deleted
+components:
+  schemas:
+    ShoppingItem:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string

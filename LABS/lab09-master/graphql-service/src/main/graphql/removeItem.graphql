@@ -1,0 +1,8 @@
+mutation RemoveItem ($name: String!) {
+	removeItem(name: $name) {
+		items {
+			name
+			description
+		}
+	}
+}

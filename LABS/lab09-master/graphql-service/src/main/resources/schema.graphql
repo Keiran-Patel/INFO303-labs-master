@@ -1,0 +1,67 @@
+schema {
+	query: ShoppingListQuery
+	mutation: ShoppingListMutation
+}
+
+"""
+An item in the shopping list.
+"""
+type ShoppingItem {
+	"""
+	The unique name of the item.
+	"""
+	name: String!
+
+	"""
+	The description of an item.
+	"""
+	description: String!
+}
+
+"""
+A shopping list
+"""
+type ShoppingList {
+
+	"""
+	The collection of items in the shopping list.
+	"""
+	items: [ShoppingItem]!
+}
+
+
+type ShoppingListQuery {
+
+	"""
+	The shopping list.
+	"""
+	shoppingList: ShoppingList
+}
+
+type ShoppingListMutation {
+
+	"""
+	Remove item from shopping list.
+	"""
+	removeItem(
+		"""
+		The name of the item to remove.
+		"""
+		name: String!
+	): ShoppingList
+
+	"""
+	Add an item to the shopping list.
+	"""
+	addItem(
+		"""
+		The name of the item being added.
+		"""
+		name: String!,
+
+		"""
+		The description of the item being added.
+		"""
+		description: String!
+	): ShoppingList
+}

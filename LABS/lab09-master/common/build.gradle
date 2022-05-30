@@ -1,0 +1,17 @@
+plugins {
+	id 'java'
+}
+
+dependencies {
+	def slf4jVer = '1.7.36'
+	def logbackVer = '1.2.11'
+	def gsonVer = '2.9.0'
+
+	implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '3.0.1'
+	implementation group: 'jakarta.jws', name: 'jakarta.jws-api', version: '3.0.0'
+	implementation group: 'com.google.code.gson', name: 'gson', version: gsonVer
+
+	implementation group: 'ch.qos.logback', name: 'logback-classic', version: logbackVer
+	implementation group: 'org.slf4j', name: 'jcl-over-slf4j', version: slf4jVer
+	implementation group: 'org.slf4j', name: 'jul-to-slf4j', version: slf4jVer
+}

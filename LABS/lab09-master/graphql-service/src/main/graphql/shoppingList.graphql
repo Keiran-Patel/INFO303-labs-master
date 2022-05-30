@@ -1,0 +1,8 @@
+query ShoppingList {
+  shoppingList {
+    items {
+      name
+      description
+    }
+  }
+}

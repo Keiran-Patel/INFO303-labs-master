@@ -1,0 +1,17 @@
+mutation CreateProduct($id: String!, $name: String!, $category: String!, $price: Float!, $description: String!){
+    createProduct(
+        product: {
+            id: $id
+            name: $name
+            category: $category
+            price: $price
+            description: $description
+        }
+    ) {
+        id
+        name
+        category
+        price
+        description
+    }
+}

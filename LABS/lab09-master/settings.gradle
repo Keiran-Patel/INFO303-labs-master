@@ -1,0 +1,5 @@
+rootProject.name = 'lab09'
+include 'common'
+include 'rest-service'
+include 'graphql-service'
+include 'router'

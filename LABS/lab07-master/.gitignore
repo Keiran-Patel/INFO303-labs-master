@@ -1,0 +1,15 @@
+.gradle/
+.nb-gradle/
+nbproject/
+build/
+bin/
+dist/
+tmp/
+.classpath
+.project
+*.zip
+*.tgz
+*.jar
+!gradle-wrapper.jar
+*.class
+.DS_Store

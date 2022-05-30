@@ -1,0 +1,5 @@
+src/main/java/api/CatalogueApi.java
+src/main/java/api/ProductApi.java
+src/main/java/domain/Product.java
+src/main/java/util/CollectionFormats.java
+src/main/java/util/StringUtil.java

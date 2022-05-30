@@ -1,0 +1,96 @@
+schema {
+	query: CatalogueQuery
+	mutation: CatalogueMutation
+}
+
+
+"""
+An existing product in the catalogue.
+"""
+type Product {
+	id: String!
+	name: String!
+	category: String!
+	price: Float
+	description: String
+	inventory: Inventory
+}
+
+"""
+A new product to add to the catalogue.
+"""
+input NewProduct {
+	id: String!
+	name: String!
+	category: String!
+	price: Float
+	description: String
+}
+
+
+"""
+Stock level and reordering details for a product.
+"""
+type Inventory {
+	currentStockLevel: Float
+	reorderThreshold: Float
+	reorderAmount: Float
+	supplier: String
+	units: String
+}
+
+
+"""
+Operations for querying the catalogue.
+"""
+type CatalogueQuery {
+
+	"""
+	The entire product catalogue.
+	"""
+	catalogue: [Product]
+
+
+	"""
+	The categories that the products are sorted into.
+	"""
+	categories: [String]
+
+
+	"""
+	The product matching the given ID.
+	"""
+	product(id: String!): Product
+
+
+	"""
+	All products in the given category.
+	"""
+	productsInCategory(category: String!): [Product]
+
+
+	"""
+	Products that are due for reordering.
+	"""
+	dueForReorder: [Product]
+}
+
+"""
+Operations for updating the catalogue.
+"""
+type CatalogueMutation {
+	"""
+	Add a new product to the catalogue.
+	"""
+	createProduct(product: NewProduct!): Product
+
+	"""
+	Delete a product from the catalogue.
+	"""
+	deleteProduct(id: String!): Product
+
+	"""
+	Products that are due for reordering.
+	"""
+	order(id: String!, quantity: Float!): Product
+}

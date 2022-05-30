@@ -1,0 +1,198 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Product Catalogue",
+    "description": "A product catalogue management service.",
+    "version": "1.0",
+    "contact": {
+      "name": "API Dev Team",
+      "email": "api@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Catalogue",
+      "description": "The product catalogue."
+    },
+    {
+      "name": "Product",
+      "description": "A product in the catalogue."
+    }
+  ],
+  "paths": {
+    "/catalogue": {
+      "get": {
+        "tags": [
+          "Catalogue"
+        ],
+        "summary": "Get all of the products.",
+        "description": "Get the entire catalogue of products.",
+        "operationId": "get-all-products",
+        "responses": {
+          "200": {
+            "description": "Response contains an array of all of the products in the catalogue.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Catalogue"
+        ],
+        "summary": "Add a new product.",
+        "description": "Add a new product to the catalogue.",
+        "operationId": "add-new-product",
+        "requestBody": {
+          "description": "The details for the product.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "<p>Product successfully created.</p> <p>The URI of new product is available in the <code>location</code> header of the response.</p>"
+          },
+          "422": {
+            "description": "Product <b>NOT</b> created.  A product with that ID already exists."
+          }
+        }
+      }
+    },
+    "/catalogue/product/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "The item's name."
+        }
+      ],
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get a product's details.",
+        "description": "Get the complete details for a product that matches the supplied product ID.",
+        "operationId": "get-product",
+        "responses": {
+          "200": {
+            "description": "Response contains the details for the matching product.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/Not-Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Update a product's details.",
+        "description": "<p>Replace the details of an existing product that matches the supplied product ID with the details supplied in the message body.</p>\n<p>Note that the product's ID can <b>not</b> be modified via this operation.</p>",
+        "operationId": "update-product",
+        "requestBody": {
+          "description": "The details for the product.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Product successfully updated."
+          },
+          "404": {
+            "$ref": "#/components/responses/Not-Found"
+          },
+          "409": {
+            "description": "<p>Product <b>NOT</b> updated.</p> <p>Modifying the product's ID via this operation is not permitted.</p>"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Delete a product from the catalogue.",
+        "description": "Delete the product that matches the supplied ID from the catalogue.",
+        "operationId": "delete-product",
+        "responses": {
+          "204": {
+            "description": "Product successfully deleted."
+          },
+          "404": {
+            "$ref": "#/components/responses/Not-Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "description": "Details for a product in the catalogue.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Must be unique."
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      }
+    },
+    "responses": {
+      "Not-Found": {
+        "description": "No product matching the supplied ID was found."
+      }
+    }
+  }
+}

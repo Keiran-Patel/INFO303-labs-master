@@ -1,0 +1,8 @@
+mutation AddItem($name: String!, $description: String!) {
+    addItem(name: $name, description: $description) {
+		items {
+			name
+			description
+		}
+    }
+}

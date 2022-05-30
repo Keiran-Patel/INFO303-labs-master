@@ -1,0 +1,36 @@
+db.customers.insertOne(
+   { username:"boris", firstname:"Boris", lastname:	"McNorris", street:	"Some Street", suburb:"Someplace", city:"Somewhere", postcode:"9046", email:"boris＠example.invalid"
+ } 
+)
+
+
+
+
+
+db.customer.find(query, projection)
+
+
+3.Get Added again with a different Object, thought it would notify an error for the same data occuring
+
+4.  db.customers.deleteOne({}), I would use an ObjectID as a unique identifier
+
+5. db.customers.insertOne(
+   { username:"bob", firstname:"Bobby", lastname:	"Smith", street:	"Random Street", suburb:"random", city:"random", postcode:"", email:""},
+   {username:"alex", firstname:"Alex", lastname:	"Reed", street:	"Random Street2", suburb:"random2", city:"random2", postcode:"", email:"",  creditlimit:""} 
+)
+
+If I misspelled a name there would be an error: ie needed to join the credit limit to =creditlimit(one word) 
+
+6. 
+7. db.customers.updateMany(
+	
+	{username: {$lt: bob}},
+	{$set: {status: "Ellie"}}
+	{email: {$lt: }},
+	{$set: {status: "ellie@exampletest.com"}}
+)
+
+
+
+select * from public.customer;
+select * from public.product;

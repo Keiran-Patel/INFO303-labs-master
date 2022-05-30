@@ -1,0 +1,114 @@
+openapi: 3.0.1
+info:
+  title: Catalogue List API
+  version: 1.0.0
+  description: A service API for managing a product list.
+  x-logo:
+    url: ''
+servers:
+  - url: http://localhost:8080/api
+paths:
+  /items:
+    get:
+      tags:
+        - Catalogue
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+          description: Reponse contains the entire Catalogue list.
+      operationId: get Catalogue list
+      summary: Get the items in the shopping list.
+      description: Returns an array contains all of the items in the Catalogue list.
+    post:
+      requestBody:
+        description: The item to add to the list.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      tags:
+        - Catalogue
+      responses:
+        '201':
+          description: New item successfully added to the Catalogue.
+      operationId: add item
+      summary: Add an item to the Catalogue list.
+  /items/item/{id}:
+    get:
+      tags:
+        - Product
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: >-
+            Response contains the details of the item matching the provided
+            name.
+      operationId: get item
+      summary: Get a specific item's details.
+    put:
+      requestBody:
+        description: The replacement details for the item.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      tags:
+        - Product
+      responses:
+        '204':
+          description: Item successfully replaced
+      operationId: update item
+      summary: Update an existing item.
+      description: Replaces the existing item with a new one.
+    delete:
+      tags:
+        - Product
+      responses:
+        '204':
+          description: Item successfully deleted
+      operationId: delete item
+      summary: Delete an item from the list.
+    parameters:
+      - deprecated: false
+        name: id
+        description: The item's name.
+        schema:
+          type: string
+        in: path
+        required: true
+        x-last-modified: 1646611214886
+components:
+  schemas:
+    Product:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          description: The product's unique ID.
+          type: string
+        name:
+          description: The name of the product.
+          type: string
+        price:
+          description: The recommended price for the product.
+          type: number
+      x-last-modified: 1646611124198
+  securitySchemes: {}
+  headers: {}
+  responses: {}
+  parameters: {}
+tags:
+  - name: Product
+  - name: Catalogue
+security: []

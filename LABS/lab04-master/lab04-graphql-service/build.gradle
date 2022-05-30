@@ -1,0 +1,98 @@
+plugins {
+	id 'application'
+}
+
+mainClassName = "service.Lab4Service"
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// jooby
+	def joobyVer =  '2.13.0'
+	implementation group: 'io.jooby', name: 'jooby', version: joobyVer
+	implementation group: 'io.jooby', name: 'jooby-netty', version: joobyVer
+	implementation group: 'io.jooby', name: 'jooby-gson', version: joobyVer
+	implementation group: 'io.jooby', name: 'jooby-graphql', version: joobyVer
+	implementation group: 'io.jooby', name: 'jooby-graphiql', version: joobyVer
+
+	// logging
+	implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
+	implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
+
+	// guava
+	implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+
+	// Jackson data binding
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.2'
+}
+
+/* convenience tasks */
+
+tasks.register("createMissingSourceDirs") {
+	group = "Directories"
+	description = "Create all of the missing source directories for this project."
+	doFirst {
+		sourceSets.each { def sourceRoot ->
+			sourceRoot.allSource.srcDirTrees.each { def sourceDir ->
+				if(!sourceDir.dir.exists()) {
+					println "Creating ${sourceDir}"
+					mkdir sourceDir.dir
+				}
+			}
+		}
+	}
+}
+
+tasks.register("deleteEmptySourceDirs") {
+	group = "Directories"
+	description = "Delete all empty source directories."
+	doFirst {
+		sourceSets.each { def sourceRoot ->
+			sourceRoot.allSource.srcDirTrees.each { def sourceDir ->
+				if(sourceDir.dir.exists() && sourceDir.dir.isDirectory() && sourceDir.dir.list().length == 0) {
+					println "Removing empty ${sourceDir}"
+					sourceDir.dir.delete()
+				}
+			}
+		}
+	}
+}
+
+tasks.register("openProjectDir") {
+	group = "Directories"
+	description = "Open the project root in the system file manager."
+	doFirst {
+		println('Opening: ' + file(projectDir))
+		java.awt.Desktop.getDesktop().open(file(projectDir));
+	}
+}
+
+def gitIgnored="""
+.gradle
+.nb-gradle
+.classpath
+.project
+build
+bin
+dist
+*.zip
+*.tgz
+*.class
+.DS_Store
+"""
+
+tasks.register("createGitIgnore") {
+	group = "Git"
+	description = "Create the project's .gitignore file."
+	doLast {
+		def file = new File(projectDir, ".gitignore")
+		if ( !file.exists() ) {
+			println('Creating .gitignore')
+			file.text = gitIgnored
+		} else {
+			println('.gitignore already exists')
+		}
+	}
+}

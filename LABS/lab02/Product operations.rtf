@@ -1,0 +1,95 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2636
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww25320\viewh16000\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 paths:\
+  /items:\
+    get:\
+      operationId: get all products \
+      tags:\
+      - Catalogue \
+      summary: Get all the products in the catalogue\
+      description: Returns an array contains all of the products in the catalogue.\
+      responses:\
+        '200':\
+          description: Response contains the entire list of all products in the catalogue.\
+          content:\
+            application/json:\
+              schema:\
+                type: array\
+                items:\
+                  $ref: '#/components/schemas/Product\
+\
+\
+post:\
+      operationId: add new product\
+      tags:\
+      - Catalogue\
+      summary: Add a new product to catalogue.\
+      requestBody:\
+        description: The item to add to the catalogue.\
+        content:\
+          application/json:\
+            schema:\
+              $ref: '#/components/schemas/Product\
+        required: true\
+      responses:\
+        '201':\
+          description: New product successfully added to the catalogue.\
+          content: \{\}\
+  /items/item/\{productid\}:\
+    parameters:\
+      - name: name\
+        in: path\
+        schema:\
+            type: string\
+        required: true\
+        description: The product\'92s name.  \
+\
+\
+get:\
+      operationId: get item\
+      tags:\
+      - Catalogue\
+      summary: Get a specific product\'92s details.\
+      responses:\
+        '200':\
+          description: Response contains the details of the product matching the provided\
+            Product ID.\
+          content:\
+            application/json:\
+              schema:\
+                $ref: '#/components/schemas/Product\
+\
+put:\
+      operationId: update product\
+      tags:\
+      - Catalogue\
+      summary: Update an existing item.\
+      description: Replaces the existing item with a new one.\
+      requestBody:\
+        description: The replacement details for the item.\
+        content:\
+          application/json:\
+            schema:\
+              $ref: '#/components/schemas/Product\'92\
+        required: true\
+      responses:\
+        '204':\
+          description: Item successfully replaced\
+\
+\
+    delete:\
+      operationId: delete item\
+      tags:\
+      - Catalogue\
+      summary: Delete an item from the list.\
+      responses:\
+        '204':\
+          description: Item successfully deleted\
+\
+\
+}

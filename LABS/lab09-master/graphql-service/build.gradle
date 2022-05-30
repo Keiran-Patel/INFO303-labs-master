@@ -1,0 +1,63 @@
+plugins {
+	id 'java'
+	id 'application'
+	id 'com.apollographql.apollo3' version '3.1.0'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation project (':common')
+
+	// jooby
+	def joobyVer =  '2.13.0'
+	implementation group: 'io.jooby', name: 'jooby', version: joobyVer
+	implementation group: 'io.jooby', name: 'jooby-netty', version: joobyVer
+	implementation group: 'io.jooby', name: 'jooby-gson', version: joobyVer
+	implementation group: 'io.jooby', name: 'jooby-graphql', version: joobyVer
+	implementation group: 'io.jooby', name: 'jooby-graphiql', version: joobyVer
+
+	// logging
+	implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
+	implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
+
+	// guava
+	implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+
+
+	def junitVer = '5.8.2'
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVer
+	testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVer
+	testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+
+	// apollo client
+	implementation group: 'com.apollographql.apollo3', name: 'apollo-runtime', version: '3.1.0'
+	implementation group: 'com.apollographql.apollo3', name: 'apollo-rx3-support', version: '3.1.0'
+
+}
+
+sourceSets {
+	graphql {
+		resources {
+			srcDirs = ['src/main/graphql']
+		}
+		java{
+			srcDirs = []
+		}
+	}
+}
+
+apollo {
+	packageName.set("graphql")
+}
+
+test {
+	useJUnitPlatform()
+
+	// only run tests if we explicitly run the 'tests' task
+	onlyIf { project.gradle.startParameter.taskNames.contains("test") }
+}
+
+mainClassName = 'service.GraphQLServer'

@@ -1,0 +1,150 @@
+
+Facts = measured
+Dimensions= assessable
+
+1.	Fact= units
+Dimensions= products and time
+2.	Units sold, total profit
+Staff, sales location
+3.	Product sales
+Customers gender,age,location
+4.	Discount offered
+Trends
+5.	Products with loyalty
+Items sold
+6.	Payment type
+Total revenue for each type
+7.	Worst products
+Outlet, city, country
+product
+8.	Busiest times
+Outlet
+time
+
+
+
+MORE depth for dimensions:
+
+Identify Dimensions: 
+
+Quantity _sold:
+
+products and time
+
+1. It will filter to type of product and time:attributes: 
+
+Time:
+time_key
+day
+Day_of_week
+hours
+month
+ year
+
+Products: 
+productID
+ name, 
+brand, 
+description,
+ loyaltypoints
+
+	2. Location: 
+location_key
+street
+city
+province or_state
+Country
+
+3: customer attributes:
+Age
+Gender
+
+4:trend= do some products have a higher average discount- average/mid/max
+
+5: Product:
+
+item_key
+item_name
+brand
+type
+Supplier_type
+
+6: payment type:
+
+Payment_key
+Type
+
+7.Location: 
+location_key
+street
+city
+province or_state
+Country
+
+ Product:
+item_key
+item_name
+brand
+type
+Supplier_type
+
+
+8.Location: 
+location_key
+street
+city
+province or_state
+Country
+
+Time:
+time_key
+day
+Day_of_week
+hours
+month
+ year
+
+ACTUAL TABLE FOR SQL THAT WORKS:
+
+drop table customer,location, product, time, payment_type;
+create table customer(
+Customer_ID integer,
+Age integer,
+Gender varchar(60),
+loyalty_balance integer,
+primary key(customer_ID)
+)
+
+create table location(
+    street varchar(60),
+    state varchar(60),
+    city varchar(60),
+    address varchar(60),
+    postcode integer,
+    country varchar(60),
+    primary key(street)
+)    
+
+create table product(
+    product_id  varchar(60),
+    product_name varchar(60),
+    product_type varchar(60),
+    brand_type varchar(60),
+    Supplier_type varchar(60),
+    Loyalty_points integer,
+    
+    primary key(product_id) )
+
+create table time(
+   time integer,
+   Day_of_week varchar(60),
+   Hours  integer,
+   Month  integer,
+   year integer,
+   primary Key(time)
+)
+
+create table payment_type(
+Payment_Type varchar(60), 
+primary Key(payment_type)
+)
